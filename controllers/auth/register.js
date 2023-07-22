@@ -1,6 +1,9 @@
 const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -12,13 +15,27 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
-  console.log(newUser);
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+  });
+
+  const registeredUser = await User.findOne({ email });
+
+  const payload = {
+    id: registeredUser._id,
+  };
+
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+
+  await User.findByIdAndUpdate(registeredUser._id, { token });
+  req.user = registeredUser;
+
   res.status(201).json({
     user: {
       name: newUser.name,
       email: newUser.email,
-      subscription: 'starter',
+      token,
     },
   });
 };
