@@ -17,9 +17,14 @@ const userSchema = new Schema(
     email: {
       type: String,
       match: emailRegexp,
+      unique: true,
       required: [true, 'Email is required'],
     },
     token: String,
+    isFirstLogin: {
+      type: Boolean,
+      required: true,
+    },
   },
   { versionKey: false }
 );

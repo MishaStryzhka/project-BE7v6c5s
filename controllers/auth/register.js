@@ -15,9 +15,10 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({
+  await User.create({
     ...req.body,
     password: hashPassword,
+    isFirstLogin: true,
   });
 
   const registeredUser = await User.findOne({ email });
@@ -30,12 +31,14 @@ const register = async (req, res) => {
 
   await User.findByIdAndUpdate(registeredUser._id, { token });
   req.user = registeredUser;
+  console.log(registeredUser);
 
   res.status(201).json({
     user: {
-      name: newUser.name,
-      email: newUser.email,
+      name: registeredUser.name,
+      email: registeredUser.email,
       token,
+      firstLogin: registeredUser.isFirstLogin,
     },
   });
 };
