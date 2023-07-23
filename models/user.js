@@ -1,26 +1,36 @@
-const { Schema, model } = require("mongoose");
-const { handleMongooseError } = require("../helpers");
+const { Schema, model } = require('mongoose');
+const { handleMongooseError } = require('../helpers');
 
-const userSchema = new Schema({
-  password: {
-    type: String,
-    required: [true, "Set password for user"],
-  },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-  },
-  subscription: {
-    type: String,
-    enum: ['starter', 'pro', 'business'],
-    default: "starter",
-  },
-  token: String,
-}, {versionKey: false});
+const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-userSchema.post("save", handleMongooseError);
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'User Name is required'],
+    },
+    password: {
+      type: String,
+      minlength: 6,
+      required: [true, 'Set password for user'],
+    },
+    email: {
+      type: String,
+      match: emailRegexp,
+      unique: true,
+      required: [true, 'Email is required'],
+    },
+    token: String,
+    isFirstLogin: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  { versionKey: false }
+);
 
-const User = model("user", userSchema);
+userSchema.post('save', handleMongooseError);
+
+const User = model('user', userSchema);
 
 module.exports = User;

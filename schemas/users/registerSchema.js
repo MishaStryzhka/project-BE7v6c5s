@@ -1,10 +1,9 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
-const subscriptionList = ["starter", "pro", "business"];
 const registerSchema = Joi.object({
-    email: Joi.string().required(),
-    password: Joi.string().required(),
-    subscription: Joi.string().valid(...subscriptionList),
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
 });
 
 module.exports = registerSchema;
