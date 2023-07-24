@@ -30,6 +30,7 @@ const login = async (req, res) => {
   res.status(201).json({
     token: token,
     user: {
+      name: user.name,
       email: user.email,
       subscription: user.subscription,
       isFirstLogin: !user.isFirstLogin,
