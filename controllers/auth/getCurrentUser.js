@@ -9,7 +9,6 @@ const getCurrentUser = async (req, res, next) => {
   res.status(200).json({
     name: user.name,
     email: user.email,
-    subscription: user.subscription,
   });
 };
 
