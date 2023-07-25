@@ -1,21 +1,30 @@
-const express = require("express");
+const { Router } = require('express');
 
-const router = express.Router();
+const ctrl = require('../../controllers/pet');
 
-// const ctrl = require("../../controllers/contacts");
-// const { validateBody, authenticate } = require("../../middlewares");
-// const { addSchema, updateFavoriteSchema } = require("../../schemas/contacts");
+const {
+  authenticate,
+  validateBody,
+  validateQuery,
+  validateId,
+  uploadCloud,
+} = require('../../middlewares');
 
-// router.get("/", authenticate, ctrl.getContacts);
+const { schemas } = require('../../models/pet');
 
-// router.get("/:id", authenticate, ctrl.getContactById);
+const router = Router();
 
-// router.post("/", authenticate, validateBody(addSchema), ctrl.addContact);
+router.get('/', authenticate, validateQuery(schemas.getParams), ctrl.get);
 
-// router.delete("/:id", authenticate, ctrl.removeContact);
+router.post(
+  '/',
+  authenticate,
+  uploadCloud(schemas.photoConfig),
+  validateBody(schemas.addParams),
+  ctrl.add
+);
 
-// router.put("/:id", authenticate, validateBody(addSchema), ctrl.updateContact);
-
-// router.patch("/:id/favorite", authenticate, validateBody(updateFavoriteSchema), ctrl.updateStatusContact);
+router.delete('/:petId', authenticate, validateId('petId'), ctrl.removeById);
 
 module.exports = router;
+
