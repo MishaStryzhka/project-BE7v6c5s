@@ -1,6 +1,14 @@
 const express = require('express');
-const { validateBody, authenticate } = require('../../middlewares');
-const { registerSchema, loginSchema } = require('../../schemas/users');
+const {
+  validateBody,
+  authenticate,
+  uploadUserAvatar,
+} = require('../../middlewares');
+const {
+  registerSchema,
+  loginSchema,
+  updateSchema,
+} = require('../../schemas/users');
 
 const router = express.Router();
 
@@ -10,6 +18,12 @@ router.post('/register', validateBody(registerSchema), ctrl.register);
 router.post('/login', validateBody(loginSchema), ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);
 router.get('/current', authenticate, ctrl.getCurrentUser);
-router.post('/current/', authenticate, ctrl.updateCurrentUser);
+router.patch(
+  '/current/',
+  authenticate,
+  validateBody(updateSchema),
+  uploadUserAvatar.single('avatar'),
+  ctrl.updateCurrentUser
+);
 
 module.exports = router;
