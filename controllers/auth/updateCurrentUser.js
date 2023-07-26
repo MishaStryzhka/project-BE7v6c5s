@@ -3,7 +3,6 @@ const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
-  console.log(req.body);
   const { name, email, birthday, phone, city } = req.body;
 
   const formattedBirthday = birthday
