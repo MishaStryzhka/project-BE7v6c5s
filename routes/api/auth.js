@@ -18,7 +18,7 @@ router.post('/register', validateBody(registerSchema), ctrl.register);
 router.post('/login', validateBody(loginSchema), ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);
 router.get('/current', authenticate, ctrl.getCurrentUser);
-router.post(
+router.patch(
   '/current/',
   authenticate,
   validateBody(updateSchema),

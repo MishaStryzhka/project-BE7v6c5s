@@ -2,8 +2,9 @@ const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
+  console.log(req.file.originalname);
   const { _id } = req.user;
-  const { name, email, birthday, phone, city, avatar } = req.query;
+  const { name, email, birthday, phone, city } = req.query;
 
   const formattedBirthday = birthday
     ? new Date(birthday).toLocaleDateString('en-GB')
@@ -30,7 +31,7 @@ const updateCurrentUser = async (req, res, next) => {
       birthday: formattedBirthday,
       phone,
       city,
-      avatar,
+      avatarURL: req.file.originalname,
     },
     {
       new: true,
@@ -44,7 +45,7 @@ const updateCurrentUser = async (req, res, next) => {
       birthday: updatedUser.birthday,
       phone: updatedUser.phone,
       city: updatedUser.city,
-      avatar: updatedUser.avatar,
+      avatarURL: updatedUser.avatarURL,
     },
   });
 };
