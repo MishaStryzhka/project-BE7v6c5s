@@ -2,9 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 
+
+const ctrl = require("../../controllers/notices");
 // const ctrl = require("../../controllers/contacts");
-// const { validateBody, authenticate } = require("../../middlewares");
-// const { addSchema, updateFavoriteSchema } = require("../../schemas/contacts");
+const { validateBody, authenticate } = require("../../middlewares");
+const { noticeSchema } = require("../../schemas/notices");
 
 // router.get("/", authenticate, ctrl.getContacts);
 
@@ -18,4 +20,24 @@ const router = express.Router();
 
 // router.patch("/:id/favorite", authenticate, validateBody(updateFavoriteSchema), ctrl.updateStatusContact);
 
+router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
+router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
+router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
+
+
+router.post(
+    '/:category',
+    authenticate,
+    validateBody(noticeSchema),
+    ctrl.createNoticeByCategory
+);
+
+router.post(
+    '/favorites/:noticeId',
+    authenticate,
+    validateBody(noticeSchema),
+    ctrl.updateNotice
+);
 module.exports = router;
+
+

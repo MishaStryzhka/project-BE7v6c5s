@@ -1,7 +1,5 @@
-// const addSchema = require("./addSchema");
-// const updateFavoriteSchema = require("./updateFavoriteSchema");
 
+const noticeSchema = require("./noticeSchema");
 module.exports = {
-    // addSchema,
-    // updateFavoriteSchema,
+    noticeSchema,
 };
