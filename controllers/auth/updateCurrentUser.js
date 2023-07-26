@@ -2,9 +2,9 @@ const { HttpError } = require('../../helpers');
 const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
-  console.log(req.file.originalname);
   const { _id } = req.user;
-  const { name, email, birthday, phone, city } = req.query;
+  console.log(req.body);
+  const { name, email, birthday, phone, city } = req.body;
 
   const formattedBirthday = birthday
     ? new Date(birthday).toLocaleDateString('en-GB')

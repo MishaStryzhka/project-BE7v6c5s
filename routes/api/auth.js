@@ -19,7 +19,7 @@ router.post('/login', validateBody(loginSchema), ctrl.login);
 router.post('/logout', authenticate, ctrl.logout);
 router.get('/current', authenticate, ctrl.getCurrentUser);
 router.patch(
-  '/current/',
+  '/current/update',
   authenticate,
   validateBody(updateSchema),
   uploadUserAvatar.single('avatar'),
