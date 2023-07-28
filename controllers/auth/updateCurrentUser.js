@@ -5,12 +5,6 @@ const updateCurrentUser = async (req, res, next) => {
   const { _id } = req.user;
   const { name, email, birthday, phone, city } = req.body;
 
-  const formattedBirthday = birthday
-    ? new Date(birthday).toLocaleDateString('en-GB')
-    : '';
-
-  console.log(formattedBirthday);
-
   const user = await User.findById(_id);
   if (!user) {
     next(HttpError(401, 'Not authorized'));
@@ -28,10 +22,10 @@ const updateCurrentUser = async (req, res, next) => {
       {
         name,
         email,
-        birthday: formattedBirthday,
+        birthday,
         phone,
         city,
-        avatarURL: req.file.originalname,
+        avatar: req.file.originalname,
       },
       {
         new: true,
@@ -45,7 +39,7 @@ const updateCurrentUser = async (req, res, next) => {
         birthday: updatedUser.birthday,
         phone: updatedUser.phone,
         city: updatedUser.city,
-        avatarURL: updatedUser.avatarURL,
+        avatar: updatedUser.avatarURL,
       },
     });
   } else {
@@ -54,7 +48,7 @@ const updateCurrentUser = async (req, res, next) => {
       {
         name,
         email,
-        birthday: formattedBirthday,
+        birthday,
         phone,
         city,
       },
@@ -70,7 +64,7 @@ const updateCurrentUser = async (req, res, next) => {
         birthday: updatedUser.birthday,
         phone: updatedUser.phone,
         city: updatedUser.city,
-        avatarURL: updatedUser.avatarURL,
+        avatar: updatedUser.avatarURL,
       },
     });
   }
