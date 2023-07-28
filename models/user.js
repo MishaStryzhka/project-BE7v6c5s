@@ -45,6 +45,9 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
+// -> Automatically generate createAt & updateAt fields
+userSchema.set('timestamps', true);
+
 userSchema.post('save', handleMongooseError);
 
 const User = model('user', userSchema);
