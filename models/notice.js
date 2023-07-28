@@ -30,7 +30,8 @@ const noticeSchema = new Schema({
     type: Date,
     required: [true, "Set birthday for notice"],
 
-  },
+  }, 
+
   place: {
     type: String,
     required: [true, "Set location category for notice"],
@@ -49,8 +50,7 @@ const noticeSchema = new Schema({
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
+    ref: 'users',
   },
   imageURL: {
     type: String,
