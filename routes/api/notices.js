@@ -23,6 +23,11 @@ const { noticeSchema } = require("../../schemas/notices");
 router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
 router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
 router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
+router.delete(
+    '/favorites/:noticeId',
+    authenticate,
+    ctrl.deleteFavoriteNoticeById
+);
 
 
 router.post(

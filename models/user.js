@@ -21,10 +21,14 @@ const userSchema = new Schema(
       required: [true, 'Email is required'],
     },
     token: String,
-    isFirstLogin: {
+      isFirstLogin: {
       type: Boolean,
       required: true,
     },
+    favorite: {
+        type: Schema.Types.ObjectId,
+        ref: 'notices',
+      },
   },
   { versionKey: false }
 );

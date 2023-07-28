@@ -13,7 +13,7 @@ const createNoticeByCategory = async (req, res, next) => {
     console.log("req.body", req.body)
     const notice = await Notice.create({
         ...req.body,
-        // owner,
+        owner,
         category,
         // imageURL: result.url,
         // imagePublicId: result.public_id,
