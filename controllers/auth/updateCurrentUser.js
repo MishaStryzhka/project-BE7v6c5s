@@ -25,7 +25,7 @@ const updateCurrentUser = async (req, res, next) => {
         birthday,
         phone,
         city,
-        avatar: req.file.originalname,
+        avatar: req.file.path,
       },
       {
         new: true,
@@ -39,7 +39,7 @@ const updateCurrentUser = async (req, res, next) => {
         birthday: updatedUser.birthday,
         phone: updatedUser.phone,
         city: updatedUser.city,
-        avatar: updatedUser.avatarURL,
+        avatar: updatedUser.avatar,
       },
     });
   } else {
@@ -64,7 +64,7 @@ const updateCurrentUser = async (req, res, next) => {
         birthday: updatedUser.birthday,
         phone: updatedUser.phone,
         city: updatedUser.city,
-        avatar: updatedUser.avatarURL,
+        avatar: updatedUser.avatar,
       },
     });
   }
