@@ -22,31 +22,58 @@ const updateCurrentUser = async (req, res, next) => {
     throw HttpError(409, 'Email in use');
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    _id,
-    {
-      name,
-      email,
-      birthday: formattedBirthday,
-      phone,
-      city,
-      avatarURL: req.file.originalname,
-    },
-    {
-      new: true,
-    }
-  );
+  if (req.file) {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        birthday: formattedBirthday,
+        phone,
+        city,
+        avatarURL: req.file.originalname,
+      },
+      {
+        new: true,
+      }
+    );
 
-  res.status(200).json({
-    User: {
-      name: updatedUser.name,
-      email: updatedUser.email,
-      birthday: updatedUser.birthday,
-      phone: updatedUser.phone,
-      city: updatedUser.city,
-      avatarURL: updatedUser.avatarURL,
-    },
-  });
+    res.status(200).json({
+      User: {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        birthday: updatedUser.birthday,
+        phone: updatedUser.phone,
+        city: updatedUser.city,
+        avatarURL: updatedUser.avatarURL,
+      },
+    });
+  } else {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        birthday: formattedBirthday,
+        phone,
+        city,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      User: {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        birthday: updatedUser.birthday,
+        phone: updatedUser.phone,
+        city: updatedUser.city,
+        avatarURL: updatedUser.avatarURL,
+      },
+    });
+  }
 };
 
 module.exports = updateCurrentUser;
