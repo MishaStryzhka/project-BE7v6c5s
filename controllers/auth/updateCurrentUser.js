@@ -1,4 +1,4 @@
-const { HttpError } = require('../../helpers');
+const { HttpError, cloudinary } = require('../../helpers');
 const { User } = require('../../models');
 
 const updateCurrentUser = async (req, res, next) => {
@@ -17,31 +17,37 @@ const updateCurrentUser = async (req, res, next) => {
   }
 
   if (req.file) {
-    const updatedUser = await User.findByIdAndUpdate(
-      _id,
-      {
-        name,
-        email,
-        birthday,
-        phone,
-        city,
-        avatar: req.file.originalname,
-      },
-      {
-        new: true,
-      }
-    );
+    // const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+    //   upload_preset: 'dev_setups',
+    // });
+    const uploadedResponse = await cloudinary.uploader.upload(req.file.path);
+    console.log(uploadedResponse);
 
-    res.status(200).json({
-      User: {
-        name: updatedUser.name,
-        email: updatedUser.email,
-        birthday: updatedUser.birthday,
-        phone: updatedUser.phone,
-        city: updatedUser.city,
-        avatar: updatedUser.avatarURL,
-      },
-    });
+    // const updatedUser = await User.findByIdAndUpdate(
+    //   _id,
+    //   {
+    //     name,
+    //     email,
+    //     birthday,
+    //     phone,
+    //     city,
+    //     avatar: req.file.originalname,
+    //   },
+    //   {
+    //     new: true,
+    //   }
+    // );
+
+    // res.status(200).json({
+    //   User: {
+    //     name: updatedUser.name,
+    //     email: updatedUser.email,
+    //     birthday: updatedUser.birthday,
+    //     phone: updatedUser.phone,
+    //     city: updatedUser.city,
+    //     avatar: updatedUser.avatarURL,
+    //   },
+    // });
   } else {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
