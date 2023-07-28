@@ -3,6 +3,7 @@ const {
   validateBody,
   authenticate,
   uploadUserAvatar,
+  upload,
 } = require('../../middlewares');
 const {
   registerSchema,
@@ -22,7 +23,8 @@ router.patch(
   '/current/update',
   authenticate,
   validateBody(updateSchema),
-  uploadUserAvatar.single('avatar'),
+  // uploadUserAvatar.single('avatar'),
+  upload.single('avatar'),
   ctrl.updateCurrentUser
 );
 
