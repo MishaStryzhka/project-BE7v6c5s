@@ -9,6 +9,7 @@ const swaggerDocument = require('./swagger.json');
 const authRouter = require('./routes/api/auth');
 const noticesRouter = require('./routes/api/notices');
 const petsRouter = require('./routes/api/pets');
+const newsRouter = require("./routes/api/news");
 
 const app = express();
 
