@@ -8,13 +8,15 @@ const createNoticeByCategory = async (req, res, next) => {
     // await fs.unlink(req.file.path);
 
     const { _id: owner } = req.user;
+    console.log("owner", owner)
     const { category } = req.params;
+    console.log("req.body", req.body)
     const notice = await Notice.create({
         ...req.body,
-        owner,
+        // owner,
         category,
-        imageURL: result.url,
-        imagePublicId: result.public_id,
+        // imageURL: result.url,
+        // imagePublicId: result.public_id,
     })
     if (!notice) {
         next(HttpError(404, "Not found"))
