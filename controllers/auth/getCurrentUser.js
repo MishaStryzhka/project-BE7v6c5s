@@ -9,6 +9,10 @@ const getCurrentUser = async (req, res, next) => {
   res.status(200).json({
     name: user.name,
     email: user.email,
+    birthday: user.birthday,
+    phone: user.phone,
+    city: user.city,
+    avatarURL: user.avatarURL,
   });
 };
 
