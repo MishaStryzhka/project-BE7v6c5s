@@ -30,7 +30,7 @@ const get = async (req, res) => {
 
 
 const add = async (req, res) => {
-  
+
   if (!req.file) {
     throw HttpError(400, "Image is required")
   }
@@ -48,22 +48,25 @@ const add = async (req, res) => {
 
 
 const removeById = async (req, res) => {
+  
   const {
     user: { _id: userId },
     params: { petId },
   } = req;
+
   const pet = await Pet.findOneAndRemove({
     _id: petId,
     owner: userId,
   }).lean();
+  console.log(pet)
 
   if (!pet) {
-    throw new HttpError(404);
+    throw HttpError(404, "Pet is not exist!");
   }
 
   removeFromCloud(pet.photoUrl);
 
-  res.json(pet);
+  res.status(204);
 };
 
 module.exports = {
