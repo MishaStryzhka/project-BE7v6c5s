@@ -5,6 +5,115 @@
     "title": "Swagger - Pets Shop",
     "description": "Showing off swagger-ui-express"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"]
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": " https://project-be7v6c5s.onrender.com"
+    },
+    { "url": "http://localhost/4000" }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoint"
+    }
+  ],
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Registration object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User`s password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "token": {
+            "type": "string",
+            "description": "Bearer token from server"
+          },
+          "firstLogin": {
+            "type": "boolean",
+            "description": "Is that first user login?"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "schema": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }

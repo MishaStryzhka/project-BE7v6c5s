@@ -1,10 +1,5 @@
 const express = require('express');
-const {
-  validateBody,
-  authenticate,
-  uploadUserAvatar,
-  upload,
-} = require('../../middlewares');
+const { validateBody, authenticate, upload } = require('../../middlewares');
 const {
   registerSchema,
   loginSchema,
