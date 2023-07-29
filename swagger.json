@@ -61,13 +61,13 @@
         }
       }
     },
+
     "/api/users/login": {
-      "get": {
+      "post": {
         "tags": ["Auth"],
         "summary": "User login",
 
         "parameters": [],
-        "security": [{ "Bearer": [] }],
 
         "requestBody": {
           "description": "Login object",
@@ -92,18 +92,81 @@
               }
             }
           },
-          "400": {
-            "description": "Bade request (invalid request body)",
+          "401": {
+            "description": "Email or password is wrong",
             "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
           },
-          "409": {
-            "description": "Provided email already exists",
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get Current User",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
             "content": {}
           }
         }
       }
     }
   },
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
@@ -148,6 +211,7 @@
           }
         }
       },
+
       "LoginRequest": {
         "type": "object",
         "required": ["email", "password"],
@@ -206,12 +270,77 @@
             }
           }
         }
+      },
+
+      "LogoutRequest": {
+        "type": "object",
+        "required": ["token"],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          }
+        }
+      },
+
+      "GetCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User`s Birthday"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User`s Phone"
+              },
+              "city": {
+                "type": "string",
+                "description": "User`s City"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "firstLogin": {
+                "type": "boolean",
+                "description": "Is that first user login?"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link to User Avatar"
+              }
+            }
+          }
+        }
       }
     },
+
     "securitySchemes": {
       "Bearer": {
         "type": "http",
-        "schema": "bearer",
+        "scheme": "bearer",
         "bearerFormat": "JWT"
       }
     }
