@@ -30,7 +30,11 @@ const get = async (req, res) => {
 
 
 const add = async (req, res) => {
-  console.log(req.file);
+  
+  if (!req.file) {
+    throw HttpError(400, "Image is required")
+  }
+  
   const {
     user: { _id: userId },
     body,
@@ -40,6 +44,7 @@ const add = async (req, res) => {
  
   res.status(201).json(pet);
 };
+
 
 
 const removeById = async (req, res) => {
