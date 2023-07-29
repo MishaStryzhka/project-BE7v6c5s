@@ -1,7 +1,6 @@
-const { ctrlWrapper, HttpError, removeFromCloud } = require('../helpers');
-const path = require("path");
+const { ctrlWrapper, HttpError, removeFromCloud } = require('../../helpers');
 
-const { Pet } = require('../models/pet');
+const { Pet } = require('../../models/pet');
 
 const get = async (req, res) => {
   const {
@@ -29,14 +28,16 @@ const get = async (req, res) => {
   });
 };
 
+
 const add = async (req, res) => {
+  console.log(req.file);
   const {
     user: { _id: userId },
     body,
-    file,
   } = req;
-  //body.photoUrl = file.path;
-  const pet = (await Pet.create({ ...body, owner: userId })).toObject();
+ 
+  const pet = await Pet.create({ ...body, owner: userId, photoUrl:req.file.path });
+ 
   res.status(201).json(pet);
 };
 
