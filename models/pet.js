@@ -30,6 +30,9 @@ const petSchema = new Schema(
       type: String,
       default: '',
     },
+    imgPublicId: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -44,7 +47,6 @@ const addParams = Joi.object({
   birthday: Joi.date().iso().less('now').required(),
   type: Joi.string().required().min(2).max(16),
   comments: Joi.string().min(0).max(120),
-  
 });
 
 const getParams = Joi.object({
@@ -55,7 +57,6 @@ const getParams = Joi.object({
 const photoConfig = {
   field: 'photo',
   folder: 'pets',
-  
 };
 
 const schemas = {
