@@ -28,4 +28,3 @@ router.post(
 router.delete('/:petId', authenticate, validateId('petId'), ctrl.removeById);
 
 module.exports = router;
-

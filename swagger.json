@@ -207,6 +207,43 @@
     },
 
     "/api/pets": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Create Pet",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+
+        "requestBody": {
+          "description": "New Pet Object",
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePetRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePetResponse"
+                }
+              }
+            }
+          },
+          "401`": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      },
       "get": {
         "tags": ["Pets"],
         "summary": "Get User`s Pets",
@@ -242,7 +279,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "User`s Name"
+            "description": "User`s Name",
+            "example": "Test Name "
           },
           "email": {
             "type": "string",
@@ -261,7 +299,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "User`s Name"
+            "description": "User`s Name",
+            "example": "Test Name"
           },
           "email": {
             "type": "string",
@@ -399,18 +438,15 @@
           },
           "birthday": {
             "type": "string",
-            "description": "User`s Birthday",
-            "format": "email"
+            "description": "User`s Birthday"
           },
           "phone": {
             "type": "string",
-            "description": "User`s Phone",
-            "format": "email"
+            "description": "User`s Phone"
           },
           "city": {
             "type": "string",
-            "description": "User`s City",
-            "format": "email"
+            "description": "User`s City"
           },
           "avatar": {
             "type": "string",
@@ -454,6 +490,72 @@
                 "description": "Link to user avatar"
               }
             }
+          }
+        }
+      },
+
+      "CreatePetRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet`s Breed"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comment"
+          },
+          "photoUrl": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "format": "binary"
+          }
+        }
+      },
+      "CreatePetResponse": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Pet`s owner ID",
+            "example": "Pet`s owner ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name",
+            "example": "Pet`s Name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday",
+            "example": "Pet`s Birthday"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet`s Breed",
+            "example": "Pet`s Breed"
+          },
+          "photoUrl": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "example": "URL to Pet`s Image"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comment"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Pet`s ID",
+            "example": "Pet`s ID"
           }
         }
       },
