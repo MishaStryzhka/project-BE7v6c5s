@@ -268,6 +268,34 @@
           }
         }
       }
+    },
+
+    "/api/pets/{petID}": {
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Delete Pet by ID",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petID",
+            "required": true,
+            "type": "string",
+            "description": "petID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
     }
   },
 
