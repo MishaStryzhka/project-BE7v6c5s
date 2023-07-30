@@ -44,7 +44,7 @@ const addParams = Joi.object({
   birthday: Joi.date().iso().less('now').required(),
   type: Joi.string().required().min(2).max(16),
   comments: Joi.string().min(0).max(120),
-  photoUrl: Joi.string().uri().required()
+  
 });
 
 const getParams = Joi.object({
