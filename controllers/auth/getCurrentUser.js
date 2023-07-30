@@ -12,7 +12,7 @@ const getCurrentUser = async (req, res, next) => {
     birthday: user.birthday,
     phone: user.phone,
     city: user.city,
-    avatar: user.avatarURL,
+    avatar: user.avatar,
   });
 };
 
