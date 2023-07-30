@@ -120,15 +120,8 @@
         },
 
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LogoutResponse"
-                }
-              }
-            }
+          "204": {
+            "description": "Successful operation"
           },
           "401": {
             "description": "Not authorized",
@@ -325,56 +318,38 @@
           }
         }
       },
-      "LogoutResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "JWT"
-          }
-        }
-      },
 
       "GetCurrentUserResponse": {
         "type": "object",
         "properties": {
-          "token": {
+          "name": {
             "type": "string",
-            "description": "JWT"
+            "description": "User`s Name"
           },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User`s Name"
-              },
-              "birthday": {
-                "type": "string",
-                "description": "User`s Birthday"
-              },
-              "phone": {
-                "type": "string",
-                "description": "User`s Phone"
-              },
-              "city": {
-                "type": "string",
-                "description": "User`s City"
-              },
-              "email": {
-                "type": "string",
-                "description": "User`s Email",
-                "format": "email"
-              },
-              "firstLogin": {
-                "type": "boolean",
-                "description": "Is that first user login?"
-              },
-              "avatar": {
-                "type": "string",
-                "description": "Link to User Avatar"
-              }
-            }
+          "birthday": {
+            "type": "string",
+            "description": "User`s Birthday"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User`s Phone"
+          },
+          "city": {
+            "type": "string",
+            "description": "User`s City"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "firstLogin": {
+            "type": "boolean",
+            "description": "Is that first user login?"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Link to User Avatar"
           }
         }
       },
