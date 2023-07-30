@@ -503,19 +503,17 @@
           },
           "birthday": {
             "type": "string",
-            "description": "Pet`s Birthday"
+            "description": "Pet`s Birthday (ISO-format: 2022-01-01)"
           },
           "type": {
             "type": "string",
             "description": "Pet`s Breed"
           },
           "comments": {
-            "type": "string",
-            "description": "Comment"
+            "type": "string"
           },
           "photoUrl": {
             "type": "string",
-            "description": "Pet`s Image",
             "format": "binary"
           }
         }
@@ -556,6 +554,16 @@
             "type": "string",
             "description": "Pet`s ID",
             "example": "Pet`s ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Pet`s creation date",
+            "example": "Pet`s creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Pet`s data update date",
+            "example": "Pet`s data update date"
           }
         }
       },
