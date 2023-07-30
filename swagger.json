@@ -16,6 +16,10 @@
     {
       "name": "Auth",
       "description": "Authorization endpoint"
+    },
+    {
+      "name": "Pets",
+      "description": "Pets endpoint"
     }
   ],
   "paths": {
@@ -196,6 +200,33 @@
           },
           "409": {
             "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/pets": {
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Get User`s Pets",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsersPetsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
             "content": {}
           }
         }
@@ -423,6 +454,28 @@
                 "description": "Link to user avatar"
               }
             }
+          }
+        }
+      },
+
+      "GetUsersPetsResponse": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "string",
+            "description": "Total"
+          },
+          "page": {
+            "type": "string",
+            "description": "User`s Birthday"
+          },
+          "totalPages": {
+            "type": "string",
+            "description": "User`s Phone"
+          },
+          "results": {
+            "type": "string",
+            "description": "User`s City"
           }
         }
       }
