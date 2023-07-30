@@ -43,10 +43,10 @@ const Pet = model('pet', petSchema);
 // Validation schemas:
 
 const addParams = Joi.object({
-  name: Joi.string().required().min(2).max(16),
+  name: Joi.string().required().min(2).max(50),
   birthday: Joi.date().iso().less('now').required(),
-  type: Joi.string().required().min(2).max(16),
-  comments: Joi.string().min(0).max(120),
+  type: Joi.string().required().min(2).max(50),
+  comments: Joi.string().min(0).max(1000),
 });
 
 const getParams = Joi.object({
