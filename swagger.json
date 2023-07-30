@@ -584,8 +584,56 @@
             "description": "User`s Phone"
           },
           "results": {
-            "type": "string",
-            "description": "User`s City"
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "description": "Pet`s owner ID",
+                  "example": "Pet`s owner ID"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Pet`s Name",
+                  "example": "Pet`s Name"
+                },
+                "birthday": {
+                  "type": "string",
+                  "description": "Pet`s Birthday",
+                  "example": "Pet`s Birthday"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Pet`s Breed",
+                  "example": "Pet`s Breed"
+                },
+                "photoUrl": {
+                  "type": "string",
+                  "description": "Pet`s Image",
+                  "example": "URL to Pet`s Image"
+                },
+                "comments": {
+                  "type": "string",
+                  "description": "Comment"
+                },
+                "_id": {
+                  "type": "string",
+                  "description": "Pet`s ID",
+                  "example": "Pet`s ID"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Pet`s creation date",
+                  "example": "Pet`s creation date"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "Pet`s data update date",
+                  "example": "Pet`s data update date"
+                }
+              }
+            }
           }
         }
       }
