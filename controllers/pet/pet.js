@@ -1,7 +1,6 @@
-const { ctrlWrapper, HttpError, removeFromCloud } = require('../helpers');
-const path = require("path");
+const { ctrlWrapper, HttpError, removeFromCloud } = require('../../helpers');
 
-const { Pet } = require('../models/pet');
+const { Pet } = require('../../models/pet');
 
 const get = async (req, res) => {
   const {
@@ -29,35 +28,45 @@ const get = async (req, res) => {
   });
 };
 
+
 const add = async (req, res) => {
+
+  if (!req.file) {
+    throw HttpError(400, "Image is required")
+  }
+  
   const {
     user: { _id: userId },
     body,
-    file,
   } = req;
-  //body.photoUrl = file.path;
-  const pet = (await Pet.create({ ...body, owner: userId })).toObject();
+ 
+  const pet = await Pet.create({ ...body, owner: userId, photoUrl:req.file.path });
+ 
   res.status(201).json(pet);
 };
 
 
+
 const removeById = async (req, res) => {
+  
   const {
     user: { _id: userId },
     params: { petId },
   } = req;
+
   const pet = await Pet.findOneAndRemove({
     _id: petId,
     owner: userId,
   }).lean();
+  console.log(pet)
 
   if (!pet) {
-    throw new HttpError(404);
+    throw HttpError(404, "Pet is not exist!");
   }
 
   removeFromCloud(pet.photoUrl);
 
-  res.json(pet);
+  res.status(204);
 };
 
 module.exports = {

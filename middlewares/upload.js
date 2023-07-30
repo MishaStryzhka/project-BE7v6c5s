@@ -11,6 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
+    
     // Determine the folder based on file properties or request data
     let folder;
 
@@ -20,8 +21,8 @@ const storage = new CloudinaryStorage({
 
     if (file.fieldname === 'avatar') {
       folder = 'avatars';
-    } else if (file.fieldname === 'documents') {
-      folder = 'documents';
+    } else if (file.fieldname === 'photoUrl') {
+      folder = 'pets';
     } else {
       folder = 'misc';
     }

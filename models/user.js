@@ -37,10 +37,14 @@ const userSchema = new Schema(
       required: false,
     },
     token: String,
-    isFirstLogin: {
+      isFirstLogin: {
       type: Boolean,
       required: true,
     },
+    favorite: {
+        type: Schema.Types.ObjectId,
+        ref: 'notices',
+      },
   },
   { versionKey: false }
 );

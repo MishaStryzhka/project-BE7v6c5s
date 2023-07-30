@@ -1,10 +1,20 @@
 const News = require("../../models/news");
 
 const getNews = async (req, res, next) => {
-    const news = await News.find();
-    console.log("news", news);
+    const { page, limit, search } = req.query;
+    console.log("req", req.query);
 
-    res.status(200).json(news);
+    const news = await News.find({
+        title: { $regex: search, $options: "i" },
+    })
+        .skip(limit * (page - 1))
+        .limit(limit);
+
+    const quantityNews = await News.find({
+        title: { $regex: search, $options: "i" },
+    });
+
+    res.status(200).json({ quantityNews: quantityNews.length, news });
 };
 
 module.exports = getNews;
