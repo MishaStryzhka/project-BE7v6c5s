@@ -10,8 +10,7 @@
   "servers": [
     {
       "url": " https://project-be7v6c5s.onrender.com"
-    },
-    { "url": "http://localhost/4000" }
+    }
   ],
   "tags": [
     {
@@ -109,7 +108,7 @@
         "security": [{ "Bearer": [] }],
 
         "requestBody": {
-          "description": "Login object",
+          "description": "Logout object",
           "required": true,
           "content": {
             "application/json": {
@@ -160,6 +159,50 @@
           },
           "401": {
             "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/users/current/update": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update Current User",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Update object",
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCurrentUserRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bade request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
             "content": {}
           }
         }
@@ -330,6 +373,79 @@
               "avatar": {
                 "type": "string",
                 "description": "Link to User Avatar"
+              }
+            }
+          }
+        }
+      },
+
+      "UpdateCurrentUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User`s Name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User`s Email",
+            "format": "email"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "User`s Birthday",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User`s Phone",
+            "format": "email"
+          },
+          "city": {
+            "type": "string",
+            "description": "User`s City",
+            "format": "email"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User`s Avatar",
+            "format": "binary"
+          }
+        }
+      },
+      "UpdateCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "User": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User`s Name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "city": {
+                "type": "string",
+                "description": "User`s Email",
+                "format": "email"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Link to user avatar"
               }
             }
           }
