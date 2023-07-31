@@ -4,28 +4,17 @@ const router = express.Router();
 
 
 const ctrl = require("../../controllers/notices");
-// const ctrl = require("../../controllers/contacts");
-const { validateBody, authenticate } = require("../../middlewares");
+
+const { validateBody, authenticate, upload } = require("../../middlewares");
 const { noticeSchema } = require("../../schemas/notices");
 
-// router.get("/", authenticate, ctrl.getContacts);
-
-// router.get("/:id", authenticate, ctrl.getContactById);
-
-// router.post("/", authenticate, validateBody(addSchema), ctrl.addContact);
-
-// router.delete("/:id", authenticate, ctrl.removeContact);
-
-// router.put("/:id", authenticate, validateBody(addSchema), ctrl.updateContact);
-
-// router.patch("/:id/favorite", authenticate, validateBody(updateFavoriteSchema), ctrl.updateStatusContact);
 
 router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
 router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
 router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
 
 router.get('/', authenticate, ctrl.getUserNotices);
-// router.get('/', authenticate, validateQuery(schemas.getParams), ctrl.getUserNotices)
+
 router.delete(
     '/favorites/:noticeId',
     authenticate,
@@ -36,6 +25,7 @@ router.delete(
 router.post(
     '/:category',
     authenticate,
+    upload.single('photoUrl'),
     validateBody(noticeSchema),
     ctrl.createNoticeByCategory
 );
@@ -46,6 +36,7 @@ router.post(
     validateBody(noticeSchema),
     ctrl.updateNotice
 );
+
 module.exports = router;
 
 

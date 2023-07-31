@@ -1,24 +1,31 @@
+const cloudinary = require("cloudinary");
+
 const { Notice } = require("../../models")
-const { HttpError } = require("../../helpers");
-// const { deleteLCD } = require("../../helpers/cloudinary");
+const { HttpError} = require("../../helpers");
+
 
 
 const deleteNoticeById = async (req, res, next) => {
     const { _id: userId } = req.user;
     const { noticeId } = req.params;
 
-    const notice = await Notice.findByIdAndDelete({
+     // -> Delete img from MangoDB
+    const notice = await Notice.findOneAndRemove({
         _id: noticeId,
         owner: userId,
-    });
+    }).lean();
 
     if (!notice) {
-        next(HttpError(404, "Not found"))
+        next(HttpError(404, "Notice is not exist!"))
     }
 
-    // await deleteLCD(notice.imagePublicId);
+    // -> Delete img from Cloudinary
+    const { imgPublicId } = notice;
+    
+    await cloudinary.uploader.destroy(imgPublicId)
+
     res.json({
-        message: "the note has been deleted"
+        message: "Notice has been deleted"
     })
 };
 

@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const noticeSchema = Joi.object({
-  title: Joi.string().required(),
+  title: Joi.string(),
   price: Joi.number().min(1).messages({
     "number.min": "Price must be more than 0",
   }),
@@ -24,8 +24,9 @@ const noticeSchema = Joi.object({
     "any.required": "Set sex for notice",
    }),
   comments: Joi.string(),
-  imageURL: Joi.string(),
-  imagePublicId: Joi.string(),
+
+  
 });
+
 
 module.exports = noticeSchema;

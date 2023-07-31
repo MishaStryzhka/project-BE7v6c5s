@@ -4,18 +4,18 @@ const { handleMongooseError } = require("../helpers");
 const noticeSchema = new Schema({
   title: {
     type: String,
-    required: [true, "Set title for notice"],
+    
   },
   name: {
     type: String,
     minlength: 2,
-    maxlength: 12,
+    maxlength: 100,
     required: [true, "Set name for notice"],
     
   },
   category: {
     type: String,
-    enum: ["sell", "inGoodHands", "lostFound"],
+    enum: ["sell", "lost-found", "for-free"],
     required: [true, "Set category for notice"],
   },
   price: {
@@ -25,13 +25,10 @@ const noticeSchema = new Schema({
       return this.category === "sell";
     },
   },
-
   birthday: {
     type: Date,
     required: [true, "Set birthday for notice"],
-
   }, 
-
   place: {
     type: String,
     required: [true, "Set location category for notice"],
@@ -52,11 +49,11 @@ const noticeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-  imageURL: {
+  photoUrl: {
     type: String,
-    default: null,
+    // required: [true, 'Set photo for notice'],
   },
-  imagePublicId: {
+  imgPublicId: {
     type: String,
   },
 },
