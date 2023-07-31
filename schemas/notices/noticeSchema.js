@@ -8,9 +8,9 @@ const noticeSchema = Joi.object({
   name: Joi.string().required().min(2).messages({
     'any.required': 'Set name for notice',
   }),
-  category: Joi.string().required().min(2).messages({
-    'any.required': 'Set category for notice',
-  }),
+  // category: Joi.string().required().min(2).messages({
+  //   'any.required': 'Set category for notice',
+  // }),
   birthday: Joi.date().max("now").required().messages({
     "any.required": "Set birthday for notice",
   }),

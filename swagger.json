@@ -247,30 +247,6 @@
             "content": {}
           }
         }
-      },
-      "get": {
-        "tags": ["Pets"],
-        "summary": "Get User`s Pets",
-
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUsersPetsResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
       }
     },
 
@@ -302,23 +278,23 @@
       }
     },
 
-    "/api/notices": {
+    "/api/notices/{category}": {
       "post": {
-        "tags": ["Pets"],
+        "tags": ["Notices"],
         "summary": "Create Notice by Category",
 
         "security": [{ "Bearer": [] }],
         "parameters": [{
             "in": "path",
-            "name": "noticeCategory",
+            "name": "category",
             "required": true,
             "type": "string",
-            "description": "noticeCategory"
+            "description": "Notice category [sell, lost-found, for-free]"
           }],
 
         "requestBody": {
           "description": "New Notice",
-          "required": false,
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -341,58 +317,6 @@
             }
           },
           "401`": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
-      },
-      "get": {
-        "tags": ["Pets"],
-        "summary": "Get User`s Pets",
-
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUsersPetsResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
-      }
-    },
-
-    "/api/notices/{petID}": {
-      "get": {
-        "tags": ["Notices"],
-        "summary": "Get Notice by ID",
-
-        "parameters": [
-          {
-            "in": "path",
-            "name": "noticeId",
-            "required": true,
-            "type": "string",
-            "description": "noticeID"
-          }
-        ],
-        "security": [{ "Bearer": [] }],
-
-        "responses": {
-          "204": {
-            "description": "Successful operation"
-          },
-          "401": {
             "description": "Not authorized",
             "content": {}
           }
@@ -764,6 +688,84 @@
                 }
               }
             }
+          }
+        }
+      },
+
+      "CreateNoticeRequest": {
+        "type": "object",
+        "properties": {
+          "photoUrl": {
+            "type": "string",
+            "format": "binary"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name"
+          },
+          "price": {
+            "type": "string",
+            "description": "Pet`s Price"
+          },
+          "category": {
+            "type": "string",
+            "description": "Notice`s Category [sell, lost-found, for-free]"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday (ISO-format: 2022-01-01)"
+          },
+          "place": {
+            "type": "string",
+            "description": "Location"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet`s breed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet`s sex [male, female]"
+          }
+        }
+      },
+      "CreateNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Pet`s owner ID",
+            "example": "Pet`s owner ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name",
+            "example": "Pet`s Name"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday",
+            "example": "Pet`s Birthday"
+          },
+          "photoUrl": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "example": "URL to Pet`s Image"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Pet`s ID",
+            "example": "Pet`s ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Pet`s creation date",
+            "example": "Pet`s creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Pet`s data update date",
+            "example": "Pet`s data update date"
           }
         }
       }
