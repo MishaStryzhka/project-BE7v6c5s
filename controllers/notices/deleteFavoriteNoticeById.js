@@ -11,16 +11,12 @@ const deleteFavoriteNoticeById = async (req, res, next) => {
     if (!user) {
         next(HttpError(404, "Not found"))
     }
-    
-    if (!user.favorite.includes(noticeId)) {
-        next(HttpError(409, `Notice with id=${noticeId} is not in user's favorite list`))
-    }
-
+   
     const result = await User.findByIdAndUpdate(
         userId,
         { $pull: { favorite: noticeId } },
         { new: true }
-    ).populate("favotite");
+    ).populate('favorite');
 
     if (!result) {
         next(HttpError(404, "Not found"))
