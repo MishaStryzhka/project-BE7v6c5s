@@ -20,6 +20,10 @@
     {
       "name": "Pets",
       "description": "Pets endpoint"
+    },
+    {
+      "name": "Notices",
+      "description": "Notices endpoint"
     }
   ],
   "paths": {
@@ -282,6 +286,104 @@
             "required": true,
             "type": "string",
             "description": "petID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/notices": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Create Notice by Category",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [{
+            "in": "path",
+            "name": "noticeCategory",
+            "required": true,
+            "type": "string",
+            "description": "noticeCategory"
+          }],
+
+        "requestBody": {
+          "description": "New Notice",
+          "required": false,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoticeRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateNoticeResponse"
+                }
+              }
+            }
+          },
+          "401`": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Get User`s Pets",
+
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsersPetsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/notices/{petID}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get Notice by ID",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "noticeID"
           }
         ],
         "security": [{ "Bearer": [] }],
