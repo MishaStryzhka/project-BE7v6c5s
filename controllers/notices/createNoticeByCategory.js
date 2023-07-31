@@ -1,28 +1,29 @@
 const { Notice } = require("../../models")
 const { HttpError } = require("../../helpers");
-// const fs = require("fs/promises");
-// const { uploadLCD } = require("../../helpers/cloudinary");
 
 const createNoticeByCategory = async (req, res, next) => {
-    // const result = await uploadLCD(req.file.path, "users-notice");
-    // await fs.unlink(req.file.path);
-
+  
     const { _id: owner } = req.user;
-    console.log("owner", owner)
+    
     const { category } = req.params;
-    console.log("req.body", req.body)
+
     const notice = await Notice.create({
         ...req.body,
         owner,
         category,
-        // imageURL: result.url,
-        // imagePublicId: result.public_id,
-    })
+        photoUrl: req.file.path,
+        imgPublicId: req.file.filename,
+    });
+
+    if (!req.file) {
+        throw HttpError(400, "Image is required")
+    }
+
     if (!notice) {
         next(HttpError(404, "Not found"))
     }
-    res.json(notice);
-
+    res.status(201).json(notice);
+   
 };
 
 module.exports = createNoticeByCategory;
