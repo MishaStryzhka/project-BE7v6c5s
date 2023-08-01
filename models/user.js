@@ -41,10 +41,10 @@ const userSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    favorite: {
+    favorite: [{
         type: Schema.Types.ObjectId,
-        ref: 'notices',
-      },
+        ref: 'notice',
+      },]
   },
   { versionKey: false }
 );
