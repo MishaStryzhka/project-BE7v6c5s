@@ -284,13 +284,15 @@
         "summary": "Create Notice by Category",
 
         "security": [{ "Bearer": [] }],
-        "parameters": [{
+        "parameters": [
+          {
             "in": "path",
             "name": "category",
             "required": true,
             "type": "string",
             "description": "Notice category [sell, lost-found, for-free]"
-          }],
+          }
+        ],
 
         "requestBody": {
           "description": "New Notice",
@@ -312,6 +314,41 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreateNoticeResponse"
+                }
+              }
+            }
+          },
+          "401`": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/notices/favorites/{noticeId}": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Update Notice",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Update Notice"
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateNoticeResponse"
                 }
               }
             }
