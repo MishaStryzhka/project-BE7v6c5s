@@ -8,12 +8,9 @@ const updateNotice = async (req, res, next) => {
 
   const user = await User.findById(userId);
 
-  console.log(user.favorite);
-
   if (!user) {
     next(HttpError(404, 'Not found'));
   }
-
   if (user.favorite.includes(noticeId)) {
     next(
       HttpError(

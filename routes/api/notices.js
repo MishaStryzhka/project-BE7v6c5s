@@ -24,10 +24,15 @@ router.post(
   '/:category',
   authenticate,
   upload.single('photoUrl'),
-  validateBody(noticeSchema.noticeCreateSchema),
+  validateBody(noticeSchema),
   ctrl.createNoticeByCategory
 );
 
-router.post('/favorites/:noticeId', authenticate, ctrl.updateNotice);
+router.post(
+  '/favorites/:noticeId',
+  authenticate,
+  validateBody(noticeSchema),
+  ctrl.updateNotice
+);
 
 module.exports = router;

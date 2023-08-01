@@ -10,7 +10,7 @@ const noticeSchema = new Schema(
       type: String,
       minlength: 2,
       maxlength: 100,
-      // required: [true, "Set name for notice"],
+      required: [true, 'Set name for notice'],
     },
     category: {
       type: String,
