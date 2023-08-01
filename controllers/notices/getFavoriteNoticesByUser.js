@@ -3,9 +3,9 @@ const { HttpError } = require("../../helpers");
 
 
 const getFavoriteNoticesByUser = async (req, res, next) => {
-    console.log('testFile');
+
     const { _id: userId } = req.user;
-    console.log('userId', userId);
+    // console.log('userId', userId);
     const notices = await User.findById(userId)
         .sort({ createdAt: -1 })
         .populate("favorite")

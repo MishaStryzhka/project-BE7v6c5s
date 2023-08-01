@@ -8,10 +8,10 @@ const ctrl = require("../../controllers/notices");
 const { validateBody, authenticate, upload } = require("../../middlewares");
 const { noticeSchema } = require("../../schemas/notices");
 
-
-router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
-
 router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
+router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
+// router.get('/getById/:noticeId', authenticate, ctrl.getOneNoticeById);
+
 router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
 
 router.get('/', authenticate, ctrl.getUserNotices);
@@ -34,7 +34,6 @@ router.post(
 router.post(
     '/favorites/:noticeId',
     authenticate,
-    validateBody(noticeSchema),
     ctrl.updateNotice
 );
 
