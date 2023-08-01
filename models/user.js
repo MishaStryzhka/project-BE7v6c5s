@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
+const { string } = require('joi');
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -36,20 +37,23 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
-    token: String,
+      token: String,
+
       isFirstLogin: {
       type: Boolean,
       required: true,
     },
-    favorite: {
+    favorite: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'notices',
+        ref: 'notice',
       },
-  },
+    ],
+      },
   { versionKey: false }
 );
 
-// -> Automatically generate createAt & updateAt fields
+
 userSchema.set('timestamps', true);
 
 userSchema.post('save', handleMongooseError);

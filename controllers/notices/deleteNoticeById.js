@@ -20,9 +20,9 @@ const deleteNoticeById = async (req, res, next) => {
     }
 
     // -> Delete img from Cloudinary
-    const { imgPublicId } = notice;
+    // const { imgPublicId } = notice;
     
-    await cloudinary.uploader.destroy(imgPublicId)
+    // await cloudinary.uploader.destroy(imgPublicId)
 
     res.json({
         message: "Notice has been deleted"

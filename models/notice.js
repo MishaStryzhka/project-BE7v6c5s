@@ -47,11 +47,11 @@ const noticeSchema = new Schema({
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: 'user',
   },
   photoUrl: {
     type: String,
-    // required: [true, 'Set photo for notice'],
+    required: [true, 'Set photo for notice'],
   },
   imgPublicId: {
     type: String,
