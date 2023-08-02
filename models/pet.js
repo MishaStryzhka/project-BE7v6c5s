@@ -30,6 +30,9 @@ const petSchema = new Schema(
       type: String,
       default: '',
     },
+    imgPublicId: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -40,11 +43,10 @@ const Pet = model('pet', petSchema);
 // Validation schemas:
 
 const addParams = Joi.object({
-  name: Joi.string().required().min(2).max(16),
+  name: Joi.string().required().min(2).max(50),
   birthday: Joi.date().iso().less('now').required(),
-  type: Joi.string().required().min(2).max(16),
-  comments: Joi.string().min(0).max(120),
-  
+  type: Joi.string().required().min(2).max(50),
+  comments: Joi.string().min(0).max(1000),
 });
 
 const getParams = Joi.object({
@@ -55,7 +57,6 @@ const getParams = Joi.object({
 const photoConfig = {
   field: 'photo',
   folder: 'pets',
-  
 };
 
 const schemas = {

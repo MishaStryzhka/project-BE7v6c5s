@@ -1,6 +1,5 @@
-const { User } = require("../../models")
+const { User } = require("../../models");
 const { HttpError } = require("../../helpers");
-
 
 const getFavoriteNoticesByUser = async (req, res, next) => {
 
@@ -16,6 +15,7 @@ const getFavoriteNoticesByUser = async (req, res, next) => {
     }
     res.json(notices);
     
+
 };
 
 module.exports = getFavoriteNoticesByUser;

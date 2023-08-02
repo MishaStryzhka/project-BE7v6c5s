@@ -35,7 +35,7 @@ const login = async (req, res) => {
       birthday: user.birthday,
       phone: user.phone,
       city: user.city,
-      avatar: user.avatarURL,
+      avatar: user.avatar,
       isFirstLogin: !user.isFirstLogin,
     },
   });

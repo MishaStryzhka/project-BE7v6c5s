@@ -1,7 +1,7 @@
-const { Notice } = require("../../models")
+const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
 
-const getUserNotices = async (req, res) => {
+const getUserNotices = async (req, res, next) => {
     const {
         user: { _id: userId },
         query,
@@ -20,7 +20,7 @@ const getUserNotices = async (req, res) => {
     }).lean();
 
     if (!notices) {
-        next(HttpError(404, "Not found"))
+        next(HttpError(404, "Not found"));
     }
 
     res.json({

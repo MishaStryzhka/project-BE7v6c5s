@@ -1,4 +1,6 @@
-const { ctrlWrapper, HttpError, removeFromCloud } = require('../../helpers');
+const cloudinary = require('cloudinary');
+
+const { ctrlWrapper, HttpError } = require('../../helpers');
 
 const { Pet } = require('../../models/pet');
 
@@ -28,45 +30,47 @@ const get = async (req, res) => {
   });
 };
 
-
 const add = async (req, res) => {
-
   if (!req.file) {
-    throw HttpError(400, "Image is required")
+    throw HttpError(400, 'Image is required');
   }
-  
+
   const {
     user: { _id: userId },
     body,
   } = req;
- 
-  const pet = await Pet.create({ ...body, owner: userId, photoUrl:req.file.path });
- 
+
+  const pet = await Pet.create({
+    ...body,
+    owner: userId,
+    photoUrl: req.file.path,
+    imgPublicId: req.file.filename,
+  });
+
   res.status(201).json(pet);
 };
 
-
-
 const removeById = async (req, res) => {
-  
   const {
     user: { _id: userId },
     params: { petId },
   } = req;
 
+  // Delete pet from mondoDB
   const pet = await Pet.findOneAndRemove({
     _id: petId,
     owner: userId,
   }).lean();
-  console.log(pet)
 
   if (!pet) {
-    throw HttpError(404, "Pet is not exist!");
+    throw HttpError(404, 'Pet is not exist!');
   }
 
-  removeFromCloud(pet.photoUrl);
+  // -> Delete img on Cloudinary
+  const { imgPublicId } = pet;
+  await cloudinary.uploader.destroy(imgPublicId);
 
-  res.status(204);
+  res.status(204).json('Deleted successfully');
 };
 
 module.exports = {
@@ -74,5 +78,3 @@ module.exports = {
   add: ctrlWrapper(add),
   removeById: ctrlWrapper(removeById),
 };
-
-

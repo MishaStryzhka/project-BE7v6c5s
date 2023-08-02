@@ -4,6 +4,7 @@ const { handleMongooseError } = require("../helpers");
 const noticeSchema = new Schema({
   title: {
     type: String,
+    required: [true, "Set title for notice"],
     
   },
   name: {

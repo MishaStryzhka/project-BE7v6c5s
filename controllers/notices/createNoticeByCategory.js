@@ -1,11 +1,13 @@
-const { Notice } = require("../../models")
+const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const createNoticeByCategory = async (req, res, next) => {
-  
+    console.log("QWE");
+
     const { _id: owner } = req.user;
-    
+
     const { category } = req.params;
+    console.log("category", category);
 
     const notice = await Notice.create({
         ...req.body,
@@ -15,15 +17,14 @@ const createNoticeByCategory = async (req, res, next) => {
         // imgPublicId: req.file.filename,
     });
 
-    // if (!req.file) {
-    //     throw HttpError(400, "Image is required")
-    // }
+    if (!req.file) {
+        throw HttpError(400, "Image is required");
+    }
 
     if (!notice) {
-        next(HttpError(404, "Not found"))
+        next(HttpError(404, "Not found"));
     }
     res.status(201).json(notice);
-   
 };
 
 module.exports = createNoticeByCategory;
