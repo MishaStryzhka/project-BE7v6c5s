@@ -1,6 +1,6 @@
 const cloudinary = require('cloudinary');
 
-const { ctrlWrapper, HttpError, removeFromCloud } = require('../../helpers');
+const { ctrlWrapper, HttpError } = require('../../helpers');
 
 const { Pet } = require('../../models/pet');
 
@@ -69,8 +69,6 @@ const removeById = async (req, res) => {
   // -> Delete img on Cloudinary
   const { imgPublicId } = pet;
   await cloudinary.uploader.destroy(imgPublicId);
-
-  // removeFromCloud(pet.photoUrl);
 
   res.status(204).json('Deleted successfully');
 };

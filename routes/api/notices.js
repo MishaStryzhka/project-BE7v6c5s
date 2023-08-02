@@ -9,6 +9,7 @@ const { validateBody, authenticate, upload } = require("../../middlewares");
 const { noticeSchema } = require("../../schemas/notices");
 
 
+
 router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
 router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
 router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
@@ -20,6 +21,7 @@ router.delete(
     authenticate,
     ctrl.deleteFavoriteNoticeById
 );
+router.get("/category/:categoryName", ctrl.getNoticesByTitle)
 
 
 router.post(
