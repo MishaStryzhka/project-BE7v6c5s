@@ -11,6 +11,7 @@ router.get("/category/:categoryName", ctrl.getNoticesByTitle);
 router.get("/:noticeId", authenticate, ctrl.getOneNoticeById);
 router.get("/favorites/favorites", authenticate, ctrl.getFavoriteNoticesByUser);
 router.get("/", authenticate, ctrl.getUserNotices);
+
 router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
 
 router.delete(

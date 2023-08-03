@@ -2,6 +2,7 @@ const { User } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const getFavoriteNoticesByUser = async (req, res, next) => {
+
     const { _id: userId } = req.user;
     const { page = 1, limit = 12, query = "" } = req.query;
 
@@ -46,6 +47,9 @@ const getFavoriteNoticesByUser = async (req, res, next) => {
         notices,
         totalNotices,
     });
+
 };
 
 module.exports = getFavoriteNoticesByUser;
+
+// Мой роут - router.get("/favorites", authenticate, ctrl.getFavoriteNoticesByUser)
