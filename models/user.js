@@ -38,9 +38,7 @@ const userSchema = new Schema(
       required: false,
     },
 
-    token: {
-      type: String,
-    },
+    token: String,
 
     isFirstLogin: {
       type: Boolean,

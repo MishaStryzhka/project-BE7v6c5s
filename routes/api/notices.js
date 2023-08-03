@@ -29,10 +29,9 @@ router.post(
 );
 
 router.post(
-  '/favorites/:noticeId',
-  authenticate,
-  // validateBody(noticeSchema),
-  ctrl.updateNotice
+    "/favorites/:noticeId",
+    authenticate,
+    ctrl.updateNotice
 );
 
 module.exports = router;
