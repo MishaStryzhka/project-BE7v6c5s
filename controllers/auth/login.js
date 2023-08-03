@@ -37,6 +37,7 @@ const login = async (req, res) => {
       city: user.city,
       avatar: user.avatar,
       isFirstLogin: !user.isFirstLogin,
+      favorite: user.favorite,
     },
   });
 };

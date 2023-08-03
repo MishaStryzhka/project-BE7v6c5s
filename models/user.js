@@ -37,9 +37,10 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
-      token: String,
 
-      isFirstLogin: {
+    token: String,
+
+    isFirstLogin: {
       type: Boolean,
       required: true,
     },
@@ -49,10 +50,9 @@ const userSchema = new Schema(
         ref: 'notice',
       },
     ],
-      },
+  },
   { versionKey: false }
 );
-
 
 userSchema.set('timestamps', true);
 

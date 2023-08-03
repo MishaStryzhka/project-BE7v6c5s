@@ -13,6 +13,7 @@ const getCurrentUser = async (req, res, next) => {
     phone: user.phone,
     city: user.city,
     avatar: user.avatar,
+    favorite: user.favorite,
   });
 };
 
