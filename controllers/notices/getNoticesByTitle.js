@@ -1,30 +1,32 @@
 const Notice = require("../../models/notice");
 
 const getNoticesByTitle = async (req, res, next) => {
-    const { page = 1, limit = 12, query } = req.query;
+    const { page = 1, limit = 12, query = "" } = req.query;
 
-    const skip = (page - 1) * limit;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
     const { categoryName } = req.params;
 
-    const searchQuery = {
-        $and: [
-            query
-                ? {
-                      category: categoryName,
-                      title: { $regex: new RegExp(query, "i") },
-                  }
-                : { category: categoryName },
-        ],
-    };
+    const searchQuery = query
+        ? {
+              category: categoryName,
+              title: { $regex: new RegExp(query, "i") },
+          }
+        : { category: categoryName };
 
-    const notices = await Notice.find(searchQuery, "-createdAt -updatedAt", {
-        skip,
-        limit: Number(limit),
-    }).sort({ createdAt: -1 });
+    const notices = await Notice.find(searchQuery, "-createdAt -updatedAt")
+        .skip(skip)
+        .limit(parseInt(limit))
+        .sort({ createdAt: -1 });
 
-    const totalHits = await Notice.countDocuments(searchQuery);
+    const totalNotices = await Notice.countDocuments(searchQuery);
 
-    if (totalHits === 0) {
+    if (totalNotices === 0 && query !== "") {
+        return res.status(404).json({
+            message: "Nothing was found for your query.",
+        });
+    }
+
+    if (totalNotices === 0) {
         return res.status(404).json({
             message: "Notices for this category not found.",
         });
@@ -32,7 +34,7 @@ const getNoticesByTitle = async (req, res, next) => {
 
     res.status(200).json({
         notices,
-        totalHits: totalHits,
+        totalNotices,
     });
 };
 

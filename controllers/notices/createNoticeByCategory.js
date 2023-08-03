@@ -2,12 +2,9 @@ const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const createNoticeByCategory = async (req, res, next) => {
-    console.log("QWE");
-
     const { _id: owner } = req.user;
 
     const { category } = req.params;
-    console.log("category", category);
 
     const notice = await Notice.create({
         ...req.body,
