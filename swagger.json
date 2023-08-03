@@ -10,6 +10,9 @@
   "servers": [
     {
       "url": " https://project-be7v6c5s.onrender.com"
+    },
+    {
+      "url": " http://localhost:4000"
     }
   ],
   "tags": [
@@ -20,6 +23,10 @@
     {
       "name": "Pets",
       "description": "Pets endpoint"
+    },
+    {
+      "name": "Notices",
+      "description": "Notices endpoint"
     }
   ],
   "paths": {
@@ -243,30 +250,6 @@
             "content": {}
           }
         }
-      },
-      "get": {
-        "tags": ["Pets"],
-        "summary": "Get User`s Pets",
-
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-
-        "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUsersPetsResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
       }
     },
 
@@ -296,6 +279,93 @@
           }
         }
       }
+    },
+
+    "/api/notices/{category}": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Create Notice by Category",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "category",
+            "required": true,
+            "type": "string",
+            "description": "Notice category [sell, lost-found, for-free]"
+          }
+        ],
+
+        "requestBody": {
+          "description": "New Notice",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoticeRequest",
+                "type": "object"
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateNoticeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/notices/favorites/{noticeId}": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Add notice to favorite",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Notice ID"
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNoticeToFavoriteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "409": {
+            "description": "Notice with that ID is already in user's favorite list",
+            "content": {}
+          }
+        }
+      }
     }
   },
 
@@ -308,7 +378,7 @@
           "name": {
             "type": "string",
             "description": "User`s Name",
-            "example": "Test Name "
+            "example": "Test Name"
           },
           "email": {
             "type": "string",
@@ -400,6 +470,13 @@
               "avatar": {
                 "type": "string",
                 "description": "Link to User Avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
               }
             }
           }
@@ -448,6 +525,13 @@
           "avatar": {
             "type": "string",
             "description": "Link to User Avatar"
+          },
+          "favorite": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Array of favorite card`s ID"
+            }
           }
         }
       },
@@ -662,6 +746,142 @@
                 }
               }
             }
+          }
+        }
+      },
+
+      "CreateNoticeRequest": {
+        "type": "object",
+        "required": [
+          "title",
+          "photoUrl",
+          "name",
+          "price",
+          "birthday",
+          "place",
+          "breed",
+          "sex"
+        ],
+
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Notice`s Title"
+          },
+          "photoUrl": {
+            "type": "string",
+            "format": "binary"
+          },
+
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name"
+          },
+          "price": {
+            "type": "string",
+            "description": "Pet`s Price"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday (ISO-format: 2022-01-01)"
+          },
+          "place": {
+            "type": "string",
+            "description": "Location"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet`s breed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet`s sex [male, female]"
+          }
+        }
+      },
+
+      "AddNoticeToFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Notice successfully added"
+          },
+          "id": {
+            "type": "string",
+            "description": "Notice ID"
+          }
+        }
+      },
+      "CreateNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Notice`s Title",
+            "example": "Notice`s Title"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet`s Name",
+            "example": "Pet`s Name"
+          },
+
+          "price": {
+            "type": "string",
+            "description": "Pet`s Price",
+            "example": "Pet`s Price"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet`s Birthday",
+            "example": "Pet`s Birthday"
+          },
+          "place": {
+            "type": "string",
+            "description": "Pet`s Location",
+            "example": "Pet`s Location"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet`s Breed",
+            "example": "Pet`s Breed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet`s Sex",
+            "example": "Pet`s Sex"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Pet`s owner ID",
+            "example": "Pet`s owner ID"
+          },
+
+          "photoUrl": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "example": "URL to Pet`s Image"
+          },
+          "imgPublicId": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "example": "URL to Pet`s Image"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Pet`s ID",
+            "example": "Pet`s ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Pet`s creation date",
+            "example": "Pet`s creation date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Pet`s data update date",
+            "example": "Pet`s data update date"
           }
         }
       }

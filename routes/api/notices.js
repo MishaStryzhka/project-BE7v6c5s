@@ -1,31 +1,31 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
 
-const ctrl = require("../../controllers/notices");
+const ctrl = require('../../controllers/notices');
 
-const { validateBody, authenticate, upload } = require("../../middlewares");
-const { noticeSchema } = require("../../schemas/notices");
+const { validateBody, authenticate, upload } = require('../../middlewares');
+const { noticeSchema } = require('../../schemas/notices');
 
-router.get("/category/:categoryName", ctrl.getNoticesByTitle);
-router.get("/:noticeId", authenticate, ctrl.getOneNoticeById);
-router.get("/favorites/favorites", authenticate, ctrl.getFavoriteNoticesByUser);
-router.get("/", authenticate, ctrl.getUserNotices);
+router.get('/category/:categoryName', ctrl.getNoticesByTitle);
+router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
+router.get('/favorites/favorites', authenticate, ctrl.getFavoriteNoticesByUser);
+router.get('/', authenticate, ctrl.getUserNotices);
 
-router.delete("/:noticeId", authenticate, ctrl.deleteNoticeById);
+router.delete('/:noticeId', authenticate, ctrl.deleteNoticeById);
 
 router.delete(
-    "/favorites/:noticeId",
-    authenticate,
-    ctrl.deleteFavoriteNoticeById
+  '/favorites/:noticeId',
+  authenticate,
+  ctrl.deleteFavoriteNoticeById
 );
 
 router.post(
-    "/:category",
-    authenticate,
-    upload.single("photoUrl"),
-    validateBody(noticeSchema),
-    ctrl.createNoticeByCategory
+  '/:category',
+  authenticate,
+  upload.single('photoUrl'),
+  validateBody(noticeSchema),
+  ctrl.createNoticeByCategory
 );
 
 router.post(

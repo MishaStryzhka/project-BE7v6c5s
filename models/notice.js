@@ -1,12 +1,15 @@
-const { Schema, model } = require("mongoose");
-const { handleMongooseError } = require("../helpers");
+const { Schema, model } = require('mongoose');
+const { handleMongooseError } = require('../helpers');
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const noticeSchema = new Schema(
     {
         title: {
-            type: String,
+          type: String,
+          minlength: 5,
+          maxlength: 200,
+          required: [true, 'Set name for notice'],
         },
         name: {
             type: String,
@@ -74,8 +77,8 @@ const noticeSchema = new Schema(
     }
 );
 
-noticeSchema.post("save", handleMongooseError);
+noticeSchema.post('save', handleMongooseError);
 
-const Notice = model("notice", noticeSchema);
+const Notice = model('notice', noticeSchema);
 
 module.exports = Notice;
