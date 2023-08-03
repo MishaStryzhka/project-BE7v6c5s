@@ -1,3 +1,4 @@
+const { HttpError } = require("../../helpers");
 const Notice = require("../../models/notice");
 
 const getNoticesByTitle = async (req, res, next) => {
@@ -27,9 +28,8 @@ const getNoticesByTitle = async (req, res, next) => {
     }
 
     if (totalNotices === 0) {
-        return res.status(404).json({
-            message: "Notices for this category not found.",
-        });
+        next(HttpError(404, "Notices for this category not found."));
+        return;
     }
 
     res.status(200).json({

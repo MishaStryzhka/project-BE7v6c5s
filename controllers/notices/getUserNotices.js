@@ -22,15 +22,13 @@ const getUserNotices = async (req, res, next) => {
         .sort({ createdAt: -1 });
 
     if (totalNotices === 0 && query !== "") {
-        return res.status(404).json({
-            message: "Nothing was found for your query.",
-        });
+        next(HttpError(404, "Nothing was found for your query."));
+        return;
     }
 
     if (totalNotices === 0) {
-        return res.status(404).json({
-            message: "Notices not found.",
-        });
+        next(HttpError(404, "Notices not found."));
+        return;
     }
 
     res.json({
