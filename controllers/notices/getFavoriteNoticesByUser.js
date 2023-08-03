@@ -3,7 +3,8 @@ const { HttpError } = require("../../helpers");
 
 const getFavoriteNoticesByUser = async (req, res, next) => {
     const { _id: userId } = req.user;
-    const { page = 1, limit = 12, query = "" } = req.query;
+    const { page = 1, limit = 12, query = "", age, gender = "" } = req.query;
+    console.log("gender", gender);
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
@@ -14,7 +15,10 @@ const getFavoriteNoticesByUser = async (req, res, next) => {
         .then((orders) =>
             orders.favorite
                 .filter((order) =>
-                    order.title.toLowerCase().includes(query.toLowerCase())
+                    order.title.toLowerCase().includes(query.toLowerCase()) &&
+                    gender !== ""
+                        ? order.sex === gender
+                        : true
                 )
                 .slice(skip, skip + parseInt(limit))
         );
