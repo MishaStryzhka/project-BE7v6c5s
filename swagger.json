@@ -329,7 +329,7 @@
     "/api/notices/favorites/{noticeId}": {
       "post": {
         "tags": ["Notices"],
-        "summary": "Update Notice",
+        "summary": "Add notice to favorite",
 
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -338,7 +338,7 @@
             "name": "noticeId",
             "required": true,
             "type": "string",
-            "description": "Update Notice"
+            "description": "Notice ID"
           }
         ],
 
@@ -348,13 +348,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateNoticeResponse"
+                  "$ref": "#/components/schemas/AddNoticeToFavoriteResponse"
                 }
               }
             }
           },
-          "401`": {
+          "401": {
             "description": "Not authorized",
+            "content": {}
+          },
+          "409": {
+            "description": "Notice with that ID is already in user's favorite list",
             "content": {}
           }
         }
@@ -803,6 +807,20 @@
             "type": "string",
             "description": "Pet`s data update date",
             "example": "Pet`s data update date"
+          }
+        }
+      },
+
+      "AddNoticeToFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Notice successfully added"
+          },
+          "id": {
+            "type": "string",
+            "description": "Notice ID"
           }
         }
       }
