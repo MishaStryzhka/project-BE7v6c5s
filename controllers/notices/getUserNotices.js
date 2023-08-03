@@ -2,18 +2,17 @@ const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const getUserNotices = async (req, res, next) => {
-    const { page = 1, limit = 12, query = "" } = req.query;
+    const { page = 1, limit = 12, query = "", age, gender = "" } = req.query;
 
     const { _id: userId } = req.user;
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    const searchQuery = query
-        ? {
-              owner: userId,
-              title: { $regex: new RegExp(query, "i") },
-          }
-        : { owner: userId };
+    const searchQuery = {};
+    if (userId) searchQuery.owner = userId;
+    if (query) searchQuery.title = { $regex: new RegExp(query, "i") };
+    // if(age) searchQuery.category = age;
+    if (gender) searchQuery.sex = gender;
 
     const totalNotices = await Notice.find(searchQuery).count();
     const notices = await Notice.find(searchQuery, "-createdAt -updatedAt")
