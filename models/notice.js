@@ -5,6 +5,9 @@ const noticeSchema = new Schema(
   {
     title: {
       type: String,
+      minlength: 2,
+      maxlength: 200,
+      required: [true, 'Set name for notice'],
     },
     name: {
       type: String,

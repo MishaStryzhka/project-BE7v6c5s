@@ -10,6 +10,9 @@
   "servers": [
     {
       "url": " https://project-be7v6c5s.onrender.com"
+    },
+    {
+      "url": " http://localhost:4000"
     }
   ],
   "tags": [
@@ -318,7 +321,7 @@
               }
             }
           },
-          "401`": {
+          "401": {
             "description": "Not authorized",
             "content": {}
           }
@@ -470,7 +473,10 @@
               },
               "favorite": {
                 "type": "array",
-                "description": "Array of favorite card`s ID"
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
               }
             }
           }
@@ -522,7 +528,10 @@
           },
           "favorite": {
             "type": "array",
-            "description": "Array of favorite card`s ID"
+            "items": {
+              "type": "string",
+              "description": "Array of favorite card`s ID"
+            }
           }
         }
       },
@@ -743,11 +752,27 @@
 
       "CreateNoticeRequest": {
         "type": "object",
+        "required": [
+          "title",
+          "photoUrl",
+          "name",
+          "price",
+          "birthday",
+          "place",
+          "breed",
+          "sex"
+        ],
+
         "properties": {
+          "title": {
+            "type": "string",
+            "description": "Notice`s Title"
+          },
           "photoUrl": {
             "type": "string",
             "format": "binary"
           },
+
           "name": {
             "type": "string",
             "description": "Pet`s Name"
@@ -755,10 +780,6 @@
           "price": {
             "type": "string",
             "description": "Pet`s Price"
-          },
-          "category": {
-            "type": "string",
-            "description": "Notice`s Category [sell, lost-found, for-free]"
           },
           "birthday": {
             "type": "string",
@@ -778,25 +799,71 @@
           }
         }
       },
+
+      "AddNoticeToFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Notice successfully added"
+          },
+          "id": {
+            "type": "string",
+            "description": "Notice ID"
+          }
+        }
+      },
       "CreateNoticeResponse": {
         "type": "object",
         "properties": {
-          "owner": {
+          "title": {
             "type": "string",
-            "description": "Pet`s owner ID",
-            "example": "Pet`s owner ID"
+            "description": "Notice`s Title",
+            "example": "Notice`s Title"
           },
           "name": {
             "type": "string",
             "description": "Pet`s Name",
             "example": "Pet`s Name"
           },
+
+          "price": {
+            "type": "string",
+            "description": "Pet`s Price",
+            "example": "Pet`s Price"
+          },
           "birthday": {
             "type": "string",
             "description": "Pet`s Birthday",
             "example": "Pet`s Birthday"
           },
+          "place": {
+            "type": "string",
+            "description": "Pet`s Location",
+            "example": "Pet`s Location"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet`s Breed",
+            "example": "Pet`s Breed"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet`s Sex",
+            "example": "Pet`s Sex"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Pet`s owner ID",
+            "example": "Pet`s owner ID"
+          },
+
           "photoUrl": {
+            "type": "string",
+            "description": "Pet`s Image",
+            "example": "URL to Pet`s Image"
+          },
+          "imgPublicId": {
             "type": "string",
             "description": "Pet`s Image",
             "example": "URL to Pet`s Image"
@@ -815,20 +882,6 @@
             "type": "string",
             "description": "Pet`s data update date",
             "example": "Pet`s data update date"
-          }
-        }
-      },
-
-      "AddNoticeToFavoriteResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Notice successfully added"
-          },
-          "id": {
-            "type": "string",
-            "description": "Notice ID"
           }
         }
       }
