@@ -1,40 +1,41 @@
-const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
+const Notice = require("../../models/notice");
 
-const getUserNotices = async (req, res, next) => {
+const getNoticesByTitle = async (req, res, next) => {
     const { page = 1, limit = 12, query = "" } = req.query;
 
-    const { _id: userId } = req.user;
-
     const skip = (parseInt(page) - 1) * parseInt(limit);
+    const { categoryName } = req.params;
 
     const searchQuery = query
         ? {
-              owner: userId,
+              category: categoryName,
               title: { $regex: new RegExp(query, "i") },
           }
-        : { owner: userId };
+        : { category: categoryName };
 
-    const totalNotices = await Notice.find(searchQuery).count();
     const notices = await Notice.find(searchQuery, "-createdAt -updatedAt")
         .skip(skip)
         .limit(parseInt(limit))
         .sort({ createdAt: -1 });
 
+    const totalNotices = await Notice.countDocuments(searchQuery);
+
     if (totalNotices === 0 && query !== "") {
-        next(HttpError(404, "Nothing was found for your query."));
-        return;
+        return res.status(404).json({
+            message: "Nothing was found for your query.",
+        });
     }
 
     if (totalNotices === 0) {
-        next(HttpError(404, "Notices not found."));
+        next(HttpError(404, "Notices for this category not found."));
         return;
     }
 
-    res.json({
+    res.status(200).json({
         notices,
         totalNotices,
     });
 };
 
-module.exports = getUserNotices;
+module.exports = getNoticesByTitle;

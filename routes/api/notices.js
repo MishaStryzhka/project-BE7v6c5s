@@ -7,11 +7,12 @@ const ctrl = require('../../controllers/notices');
 const { validateBody, authenticate, upload } = require('../../middlewares');
 const { noticeSchema } = require('../../schemas/notices');
 
-// router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
-router.get('/favorites', authenticate, ctrl.getFavoriteNoticesByUser);
-router.delete('/:noticeId', authenticate, ctrl.deleteNoticeById);
-
+router.get('/category/:categoryName', ctrl.getNoticesByTitle);
+router.get('/:noticeId', authenticate, ctrl.getOneNoticeById);
+router.get('/favorites/favorites', authenticate, ctrl.getFavoriteNoticesByUser);
 router.get('/', authenticate, ctrl.getUserNotices);
+
+router.delete('/:noticeId', authenticate, ctrl.deleteNoticeById);
 
 router.delete(
   '/favorites/:noticeId',
@@ -19,7 +20,6 @@ router.delete(
   ctrl.deleteFavoriteNoticeById
 );
 
-// Added to SWAGGER
 router.post(
   '/:category',
   authenticate,
@@ -28,6 +28,11 @@ router.post(
   ctrl.createNoticeByCategory
 );
 
-router.post('/favorites/:noticeId', authenticate, ctrl.updateNotice);
+router.post(
+  '/favorites/:noticeId',
+  authenticate,
+  // validateBody(noticeSchema),
+  ctrl.updateNotice
+);
 
 module.exports = router;
