@@ -28,11 +28,6 @@ router.post(
     ctrl.createNoticeByCategory
 );
 
-router.post(
-    "/favorites/:noticeId",
-    authenticate,
-    // validateBody(noticeSchema),
-    ctrl.updateNotice
-);
+router.post("/favorites/:noticeId", authenticate, ctrl.updateNotice);
 
 module.exports = router;
