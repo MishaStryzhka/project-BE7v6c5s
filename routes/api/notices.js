@@ -28,10 +28,7 @@ router.post(
   ctrl.createNoticeByCategory
 );
 
-router.post(
-    "/favorites/:noticeId",
-    authenticate,
-    ctrl.updateNotice
-);
+router.post("/favorites/:noticeId", authenticate, ctrl.updateNotice);
+
 
 module.exports = router;
