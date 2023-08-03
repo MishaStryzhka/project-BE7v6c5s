@@ -2,32 +2,40 @@ const { Notice } = require("../../models");
 const { HttpError } = require("../../helpers");
 
 const getUserNotices = async (req, res, next) => {
-    const {
-        user: { _id: userId },
-        query,
-    } = req;
+    const { page = 1, limit = 12, query = "" } = req.query;
 
-    const { page = 1, limit = 20 } = query;
-    const skip = (page - 1) * limit;
+    const { _id: userId } = req.user;
 
-    const totalResults = await Notice.find({ owner: userId }).count();
-    const notices = await Notice.find({ owner: userId }, null, {
-        skip,
-        limit,
-        sort: {
-            updatedAt: -1,
-        },
-    }).lean();
+    const skip = (parseInt(page) - 1) * parseInt(limit);
 
-    if (!notices) {
-        next(HttpError(404, "Not found"));
+    const searchQuery = query
+        ? {
+              owner: userId,
+              title: { $regex: new RegExp(query, "i") },
+          }
+        : { owner: userId };
+
+    const totalNotices = await Notice.find(searchQuery).count();
+    const notices = await Notice.find(searchQuery, "-createdAt -updatedAt")
+        .skip(skip)
+        .limit(parseInt(limit))
+        .sort({ createdAt: -1 });
+
+    if (totalNotices === 0 && query !== "") {
+        return res.status(404).json({
+            message: "Nothing was found for your query.",
+        });
+    }
+
+    if (totalNotices === 0) {
+        return res.status(404).json({
+            message: "Notices not found.",
+        });
     }
 
     res.json({
-        totalResults,
-        page,
-        totalPages: Math.ceil(totalResults / limit),
-        results: notices,
+        notices,
+        totalNotices,
     });
 };
 
