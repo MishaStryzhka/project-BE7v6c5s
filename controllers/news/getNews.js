@@ -3,7 +3,7 @@ const News = require("../../models/news");
 
 const getNews = async (req, res, next) => {
     const { page, limit, query } = req.query;
-    console.log("req", req.query);
+    // console.log("req", req.query);
 
     const news = await News.find({
         title: { $regex: query, $options: "i" },
