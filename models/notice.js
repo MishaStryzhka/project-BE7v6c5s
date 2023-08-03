@@ -52,7 +52,7 @@ const noticeSchema = new Schema(
         },
         photoUrl: {
             type: String,
-            // required: [true, 'Set photo for notice'],
+            required: [true, "Set photo for notice"],
         },
         imgPublicId: {
             type: String,
@@ -72,7 +72,6 @@ const noticeSchema = new Schema(
         versionKey: false,
         timestamps: true,
     }
-
 );
 
 noticeSchema.post("save", handleMongooseError);
