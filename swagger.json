@@ -375,7 +375,7 @@
           "name": {
             "type": "string",
             "description": "User`s Name",
-            "example": "Test Name "
+            "example": "Test Name"
           },
           "email": {
             "type": "string",
@@ -467,6 +467,10 @@
               "avatar": {
                 "type": "string",
                 "description": "Link to User Avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "description": "Array of favorite card`s ID"
               }
             }
           }
@@ -515,6 +519,10 @@
           "avatar": {
             "type": "string",
             "description": "Link to User Avatar"
+          },
+          "favorite": {
+            "type": "array",
+            "description": "Array of favorite card`s ID"
           }
         }
       },
