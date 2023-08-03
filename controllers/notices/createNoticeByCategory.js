@@ -13,8 +13,8 @@ const createNoticeByCategory = async (req, res, next) => {
         email: email,
         owner,
         category,
-        // photoUrl: req.file.path,
-        // imgPublicId: req.file.filename,
+        photoUrl: req.file.path,
+        imgPublicId: req.file.filename,
     });
 
     console.log("notice", notice);
