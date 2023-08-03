@@ -31,7 +31,6 @@ router.post(
 router.post(
     "/favorites/:noticeId",
     authenticate,
-    // validateBody(noticeSchema),
     ctrl.updateNotice
 );
 
