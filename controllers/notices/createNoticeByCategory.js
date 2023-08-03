@@ -10,8 +10,8 @@ const createNoticeByCategory = async (req, res, next) => {
         ...req.body,
         owner,
         category,
-        photoUrl: req.file.path,
-        imgPublicId: req.file.filename,
+        // photoUrl: req.file.path,
+        // imgPublicId: req.file.filename,
     });
 
     if (!req.file) {
