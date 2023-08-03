@@ -1,3 +1,4 @@
+const { HttpError } = require("../../helpers");
 const News = require("../../models/news");
 
 const getNews = async (req, res, next) => {
@@ -10,11 +11,21 @@ const getNews = async (req, res, next) => {
         .skip(limit * (page - 1))
         .limit(limit);
 
-    const quantityNews = await News.find({
+    const totalNews = await News.find({
         title: { $regex: query, $options: "i" },
     });
 
-    res.status(200).json({ quantityNews: quantityNews.length, news });
+    if (totalNews === 0 && query !== "") {
+        next(HttpError(404, "Nothing was found for your query."));
+        return;
+    }
+
+    if (totalNews === 0) {
+        next(HttpError(404, "Not found news"));
+        return;
+    }
+
+    res.status(200).json({ totalNews: totalNews.length, news });
 };
 
 module.exports = getNews;
