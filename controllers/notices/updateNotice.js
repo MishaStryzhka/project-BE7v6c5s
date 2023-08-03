@@ -11,12 +11,6 @@ const updateNotice = async (req, res, next) => {
   if (!user) {
     next(HttpError(404, 'Not found'));
   }
-  console.log('user.favorite', user.favorite);
-  console.log('noticeId', noticeId);
-  console.log(
-    'user.favorite.includes(noticeId)',
-    user.favorite.includes(noticeId)
-  );
 
   if (user.favorite.includes(noticeId)) {
     result = await User.findByIdAndUpdate(
@@ -30,7 +24,6 @@ const updateNotice = async (req, res, next) => {
         new: true,
       }
     );
-    console.log('result', result);
 
     res.sendStatus(204);
     return;
