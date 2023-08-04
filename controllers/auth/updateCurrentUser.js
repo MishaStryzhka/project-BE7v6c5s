@@ -3,7 +3,7 @@ const { User } = require("../../models");
 
 const updateCurrentUser = async (req, res, next) => {
     const { _id } = req.user;
-    const { name, email, birthday, phone, city, favorite } = req.body;
+    const { name, email, birthday, phone, city } = req.body;
 
     const user = await User.findById(_id);
     if (!user) {
@@ -26,7 +26,6 @@ const updateCurrentUser = async (req, res, next) => {
                 phone,
                 city,
                 avatar: req.file.path,
-                favorite,
             },
             {
                 new: true,
@@ -41,7 +40,6 @@ const updateCurrentUser = async (req, res, next) => {
                 phone: updatedUser.phone,
                 city: updatedUser.city,
                 avatar: updatedUser.avatar,
-                favorite: updatedUser.favorite,
             },
         });
     } else {
@@ -53,7 +51,6 @@ const updateCurrentUser = async (req, res, next) => {
                 birthday,
                 phone,
                 city,
-                favorite,
             },
             {
                 new: true,
@@ -68,7 +65,6 @@ const updateCurrentUser = async (req, res, next) => {
                 phone: updatedUser.phone,
                 city: updatedUser.city,
                 avatar: updatedUser.avatar,
-                favorite: updatedUser.favorite,
             },
         });
     }
