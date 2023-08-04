@@ -8,6 +8,9 @@ const getNews = async (req, res, next) => {
     const news = await News.find({
         title: { $regex: query, $options: "i" },
     })
+        .sort({
+            date: -1,
+        })
         .skip(limit * (page - 1))
         .limit(limit);
 
