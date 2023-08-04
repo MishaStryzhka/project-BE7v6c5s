@@ -1,23 +1,26 @@
-const { Notice } = require('../../models');
-const { HttpError } = require('../../helpers');
+const { Notice } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const createNoticeByCategory = async (req, res, next) => {
-  
     const { _id: owner, email, phone } = req.user;
 
-     const { category } = req.params;
+    const { category } = req.params;
+    console.log("category", category);
 
-  const categories = ['sell', 'lost-found', 'for-free'];
+    const categories = ["sell", "lost-found", "for-free"];
 
-  if (!categories.includes(category)) {
-    return next(
-      HttpError(400, 'Category has to be one of: sell, lost-found, for-free')
-    );
-  }
+    if (!categories.includes(category)) {
+        return next(
+            HttpError(
+                400,
+                "Category has to be one of: sell, lost-found, for-free"
+            )
+        );
+    }
 
-  if (!req.file) {
-    return next(HttpError(400, 'Image is required'));
-  }
+    if (!req.file) {
+        return next(HttpError(400, "Image is required"));
+    }
 
     const notice = await Notice.create({
         ...req.body,
@@ -33,7 +36,6 @@ const createNoticeByCategory = async (req, res, next) => {
         next(HttpError(404, "Not found"));
     }
     res.status(201).json(notice);
-
 };
 
 module.exports = createNoticeByCategory;
