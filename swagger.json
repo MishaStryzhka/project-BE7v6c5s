@@ -365,6 +365,42 @@
             "content": {}
           }
         }
+      },
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Delete notice from favorite",
+
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "type": "string",
+            "description": "Notice ID"
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "Notice has been deleted from favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveNoticeFromFavoriteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Notice not found",
+            "content": {}
+          }
+        }
       }
     }
   },
@@ -600,6 +636,13 @@
               "avatar": {
                 "type": "string",
                 "description": "Link to user avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
               }
             }
           }
@@ -813,6 +856,21 @@
           }
         }
       },
+
+      "RemoveNoticeFromFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Notice successfully deleted from favorites"
+          },
+          "id": {
+            "type": "string",
+            "description": "Notice ID"
+          }
+        }
+      },
+
       "CreateNoticeResponse": {
         "type": "object",
         "properties": {
