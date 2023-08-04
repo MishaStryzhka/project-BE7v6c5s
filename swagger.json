@@ -600,6 +600,13 @@
               "avatar": {
                 "type": "string",
                 "description": "Link to user avatar"
+              },
+              "favorite": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Array of favorite card`s ID"
+                }
               }
             }
           }
